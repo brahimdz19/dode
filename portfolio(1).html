@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وقلال عبد الودود - معرض الأعمال</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
+            background: var(--primary); color: white; border-radius: 50px;
+            padding: 8px 18px; cursor: pointer; border: none; font-weight: bold;
+        }
+
+        /* Header & Profile Photo */
+        header {
+            padding: 60px 20px; text-align: center;
+            background: linear-gradient(to bottom, #1e1b4b, var(--bg));
+        }
+
+        .profile-photo {
+            width: 220px; height: 220px; /* تم تكبير الصورة */
+            border-radius: 50%; border: 6px solid var(--primary);
+            margin: 0 auto 20px; overflow: hidden;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+        .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+        .name { font-size: 2.5rem; margin-bottom: 5px; }
+        .tagline { opacity: 0.8; font-size: 1.1rem; }
+
+        /* Portfolio Grid */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* فيديوهات أصغر */
+            gap: 15px;
+        }
+
+        .portfolio-item {
+            background: var(--card-bg); border-radius: 12px;
+            overflow: hidden; cursor: pointer; transition: 0.3s;
+            position: relative; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .portfolio-item:hover { transform: scale(1.05); border-color: var(--primary); }
+
+        .video-thumb-container {
+            position: relative; width: 100%; padding-top: 150%; /* نسبة طول الفيديوهات القصيرة */
+            background: #000;
+        }
+        .video-thumb-container video {
+            position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover;
+            opacity: 0.7; transition: 0.3s;
+        }
+        .portfolio-item:hover video { opacity: 1; }
+
+        .play-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 2rem; color: white; opacity: 0.8; pointer-events: none;
+        }
+
+        /* Lightbox (Video Zoom) */
+        #video-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            display: none; align-items: center; justify-content: center;
+        }
+        #video-overlay video {
+            max-width: 90%; max-height: 80vh; border-radius: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        .close-overlay {
+            position: absolute; top: 30px; right: 30px;
+            font-size: 2.5rem; color: white; cursor: pointer;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px;
+        }
+        .contact-btn {
+            padding: 10px 20px; border-radius: 8px; color: white; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; font-weight: bold; transition: 0.3s;
+        }
+        .whatsapp { background: #25d366; }
+        .instagram { background: #e4405f; }
+        .tiktok { background: #000; border: 1px solid #fff; }
+
+        html[lang="en"] { direction: ltr; }
+        html[lang="en"] .ar-only { display: none; }
+        html[lang="ar"] .en-only { display: none; }
+    </style>
+</head>
+<body>
+
+    <button class="lang-toggle" onclick="toggleLanguage()">English / العربية</button>
+
+    <header>
+        <div class="profile-photo">
+            <img src="571564100_18064281830611835_1511.jpg" alt="وقلال عبد الودود">
+        </div>
+        <h1 class="name ar-only">وقلال عبد الودود</h1>
+        <h1 class="name en-only">Abdelouadoud Ouaglal</h1>
+        <p class="tagline ar-only">محرر فيديو | أصنع الإبداع في كل لقطة</p>
+        <p class="tagline en-only">Video Editor | Creating magic in every frame</p>
+
+        <div class="contact-grid">
+            <a href="https://wa.me/213xxxxxxxxx" class="contact-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="#" class="contact-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#" class="contact-btn tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="portfolio-grid" id="portfolio">
+            <script>
+                // قائمة بأسماء ملفات الفيديو الخاصة بك
+                const videos = [
+                    { src: '123.mp4', title: 'مشروع 1' },
+                    { src: '1234.mp4', title: 'مشروع 2' },
+                    { src: '123.mp4', title: 'مشروع 3' },
+                    { src: '1234.mp4', title: 'مشروع 4' },
+                    { src: '123.mp4', title: 'مشروع 5' },
+                    { src: '1234.mp4', title: 'مشروع 6' },
+                    { src: '123.mp4', title: 'مشروع 7' },
+                    { src: '1234.mp4', title: 'مشروع 8' },
+                    { src: '123.mp4', title: 'مشروع 9' },
+                    { src: '123.mp4', title: 'مشروع 10' },
+                    { src: '123.mp4', title: 'مشروع 11' },
+                    { src: '123.mp4', title: 'مشروع 12' }
+                ];
+
+                const grid = document.getElementById('portfolio');
+                videos.forEach(vid => {
+                    grid.innerHTML += `
+                        <div class="portfolio-item" onclick="openVideo('${vid.src}')">
+                            <div class="video-thumb-container">
+                                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                                    <source src="${vid.src}" type="video/mp4">
+                                </video>
+                                <div class="play-icon"><i class="fas fa-play-circle"></i></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            </script>
+        </div>
+    </div>
+
+    <div id="video-overlay">
+        <span class="close-overlay" onclick="closeVideo()">&times;</span>
+        <video id="overlay-video" controls autoplay></video>
+    </div>
+
+    <script>
+        function openVideo(src) {
+            const overlay = document.getElementById('video-overlay');
+            const video = document.getElementById('overlay-video');
+            video.src = src;
+            overlay.style.display = 'flex';
+        }
+
+        function closeVideo() {
+            const overlay = document.getElementById('video-overlay');
+            const video = document.getElementById('overlay-video');
+            overlay.style.display = 'none';
+            video.pause();
+            video.src = "";
+        }
+
+        function toggleLanguage() {
+            const html = document.documentElement;
+            if (html.getAttribute('lang') === 'ar') {
+                html.setAttribute('lang', 'en');
+                html.setAttribute('dir', 'ltr');
+            } else {
+                html.setAttribute('lang', 'ar');
+                html.setAttribute('dir', 'rtl');
+            }
+        }
+
+        // إغلاق النافذة عند الضغط خارج الفيديو
+        document.getElementById('video-overlay').onclick = function(e) {
+            if (e.target === this) closeVideo();
+        };
+    </script>
+</body>
+</html>
